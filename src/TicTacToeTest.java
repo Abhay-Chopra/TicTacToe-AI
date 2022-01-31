@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version Testing 1.0
  */
 class TicTacToeTest {
+
     @BeforeEach
     void setUp() {
     }
