@@ -17,6 +17,7 @@ import java.util.*;
  *
  * @author Jonathan Hudson, Abhay Chopra
  * @version 1.1
+ * Tutorial 06 (W/ Amir)
  */
 public class TicTacToe extends Canvas {
 

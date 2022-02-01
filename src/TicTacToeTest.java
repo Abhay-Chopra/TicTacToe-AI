@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Class for testing the TicTacToe file (JUnit5/Jupiter)
  * @author Abhay Chopra
  * @version Testing 1.0
+ * Tutorial 06 (W/ Amir)
+ *
  */
 class TicTacToeTest {
 
