@@ -169,8 +169,8 @@ public class TicTacToe extends Canvas {
     public static boolean full(int[][] board) {
         // loops through entire array and if any space is empty: returns false; otherwise true
         // these are nested for each loops
-        for (int[] rows : board) {
-            for (int column : rows) {
+        for (int[] row : board) {
+            for (int column : row) {
                 if (column == EMPTY) {
                     return false;
                 }
@@ -192,19 +192,19 @@ public class TicTacToe extends Canvas {
         Look at indicated row at given index in board If that row has at least 3 entries with given type of piece (X/O)
         then return true, otherwise false
          */
-        for (int i = 0; i < board[row].length; i++) {
+        for (int i = 0; i < columnsIn(board); i++) {
             // checking for three consecutive pieces in a row
             if (i == 0) {
                 if (board[row][i] == piece && board[row][i + 1] == piece && board[row][i + 2] == piece) {
                     return true;
                 }
             }// when game board has 4 columns, we can check if columns 1,2,3 have the same pieces
-            else if (board[row].length == 4 && i == 2) {
+            else if (columnsIn(board) == 4 && i == 2) {
                 if (board[row][i - 1] == piece && board[row][i] == piece && board[row][i + 1] == piece) {
                     return true;
                 }
             }// when game board has 5 columns, we can check if columns 1,2,3 or 2,3,4 have the same pieces
-            else if (board[row].length == 5 && (i == 2 || i == 3)) {
+            else if (columnsIn(board) == 5 && (i == 2 || i == 3)) {
                 if (board[row][i - 1] == piece && board[row][i] == piece && board[row][i + 1] == piece) {
                     return true;
                 }
