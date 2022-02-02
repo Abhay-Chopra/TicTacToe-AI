@@ -169,9 +169,9 @@ public class TicTacToe extends Canvas {
     public static boolean full(int[][] board) {
         // loops through entire array and if any space is empty: returns false; otherwise true
         // these are nested for each loops
-        for (int[] ints : board) {
-            for (int anInt : ints) {
-                if (anInt == EMPTY) {
+        for (int[] rows : board) {
+            for (int column : rows) {
+                if (column == EMPTY) {
                     return false;
                 }
             }
@@ -329,8 +329,8 @@ public class TicTacToe extends Canvas {
         for(int row = 0; row < rowsIn(board); row++){
             for(int column = 0; column < columnsIn(board); column++){
                 // checking if current position is empty
-                if(board[row][column] == EMPTY){
-                    board[row][column] = piece;
+                if(canPlay(board, row, column)){
+                    play(board, row, column, piece);
                     // conditional checks if player has won the game
                     if(won(board, piece)){
                        board[row][column] = EMPTY;
