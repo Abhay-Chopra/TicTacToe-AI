@@ -12,33 +12,89 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  */
 class TicTacToeTest {
+    // Tests for createBoard() function
     @Test
-    void testCreateBoard() {
-        int[][] expectedBoard = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+    void testCreateBoard3x3() {
         int rows = 3;
         int columns = 3;
+        int[][] expectedBoard = new int[rows][columns];
         int[][] actualBoard = TicTacToe.createBoard(rows, columns);
         Assertions.assertArrayEquals(expectedBoard, actualBoard,
-                "An empty 2D array with 3 rows and columns should be: " + Arrays.deepToString(expectedBoard));
+                "An empty 2D array with 3 rows and 3 columns should be: " + Arrays.deepToString(expectedBoard));
+    }
+    @Test
+    void testCreateBoard4x3(){
+        int rows = 4;
+        int columns = 3;
+        int[][] expectedBoard = new int[rows][columns];
+        int[][] actualBoard = TicTacToe.createBoard(rows, columns);
+        Assertions.assertArrayEquals(expectedBoard, actualBoard,
+                "An empty 2D array with 4 rows and 4 columns should be: " + Arrays.deepToString(expectedBoard));
+    }
+    @Test
+    void testCreateBoard4x4(){
+        int rows = 4;
+        int columns = 4;
+        int[][] expectedBoard = new int[rows][columns];
+        int[][] actualBoard = TicTacToe.createBoard(rows, columns);
+        Assertions.assertArrayEquals(expectedBoard, actualBoard,
+                "An empty 2D array with 4 rows and 4 columns should be: " + Arrays.deepToString(expectedBoard));
+    }
+    @Test
+    void testCreateBoard3x5(){
+        int rows = 3;
+        int columns = 5;
+        int[][] expectedBoard = new int[rows][columns];
+        int[][] actualBoard = TicTacToe.createBoard(rows, columns);
+        Assertions.assertArrayEquals(expectedBoard, actualBoard,
+                "An empty 2D array with 4 rows and 4 columns should be: " + Arrays.deepToString(expectedBoard));
+    }
+    @Test
+    void testCreateBoard5x5(){
+        int rows = 5;
+        int columns = 5;
+        int[][] expectedBoard = new int[rows][columns];
+        int[][] actualBoard = TicTacToe.createBoard(rows, columns);
+        Assertions.assertArrayEquals(expectedBoard, actualBoard,
+                "An empty 2D array with 4 rows and 4 columns should be: " + Arrays.deepToString(expectedBoard));
     }
 
+    // Tests for rowsIn()
     @Test
-    void testRowsIn() {
-        int[][] testBoard = {{0, 0, 0},
-                             {0, 0, 0},
-                             {0, 0, 0}};
+    void testRowsIn3x3() {
         int expectedRows = 3;
-        int actualNumberRows = TicTacToe.rowsIn(testBoard);
+        int numberColumns = 3;
+        int[][] board = new int[expectedRows][numberColumns];
+        int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
-                "Number of rows in the array {{0, 0, 0},{0, 0, 0},{0, 0, 0}} should be: 3");
+                "Number of rows in the array " + Arrays.deepToString(board) + " should be: " + expectedRows);
     }
     @Test
-    void testRowsInEmpty(){
-        int[][] emptyBoard = {};
-        int expectedRows = 0;
-        int actualNumberRows = TicTacToe.rowsIn(emptyBoard);
+    void testRowsIn4x3(){
+        int expectedRows = 4;
+        int numberColumns = 3;
+        int[][] board = new int[expectedRows][numberColumns];
+        int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
-                "In an empty array, number of rows should be: 0");
+                "Number of rows in the array " + Arrays.deepToString(board) + " should be: " + expectedRows);
+    }
+    @Test
+    void testRowsIn5x4(){
+        int expectedRows = 5;
+        int numberColumns = 4;
+        int[][] board = new int[expectedRows][numberColumns];
+        int actualNumberRows = TicTacToe.rowsIn(board);
+        assertEquals(expectedRows, actualNumberRows,
+                "Number of rows in the array " + Arrays.deepToString(board) + " should be: " + expectedRows);
+    }
+    @Test
+    void testRowsIn5x5(){
+        int expectedRows = 5;
+        int numberColumns = 5;
+        int[][] board = new int[expectedRows][numberColumns];
+        int actualNumberRows = TicTacToe.rowsIn(board);
+        assertEquals(expectedRows, actualNumberRows,
+                "Number of rows in the array " + Arrays.deepToString(board) + " should be: " + expectedRows);
     }
 
     @Test
