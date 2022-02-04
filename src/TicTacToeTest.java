@@ -78,6 +78,7 @@ class TicTacToeTest {
         int expectedRows = 3;
         int numberColumns = 3;
         int[][] board = new int[expectedRows][numberColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
@@ -90,6 +91,7 @@ class TicTacToeTest {
         int expectedRows = 3;
         int numberColumns = 4;
         int[][] board = new int[expectedRows][numberColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
@@ -102,6 +104,7 @@ class TicTacToeTest {
         int expectedRows = 4;
         int numberColumns = 3;
         int[][] board = new int[expectedRows][numberColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
@@ -115,6 +118,7 @@ class TicTacToeTest {
         int[][] board = new int[expectedRows][numberColumns];
         // placing a piece at a location to test if game piece placement effects function usability
         board[expectedRows - 1][numberColumns - 1] = TicTacToe.O;
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
@@ -127,6 +131,7 @@ class TicTacToeTest {
         int expectedRows = 5;
         int numberColumns = 5;
         int[][] board = new int[expectedRows][numberColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberRows = TicTacToe.rowsIn(board);
         assertEquals(expectedRows, actualNumberRows,
@@ -140,6 +145,7 @@ class TicTacToeTest {
         int numberRows = 3;
         int expectedColumns = 3;
         int[][] board = new int[numberRows][expectedColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberColumns = TicTacToe.columnsIn(board);
         assertEquals(expectedColumns, actualNumberColumns,
@@ -153,6 +159,7 @@ class TicTacToeTest {
         int numberRows = 4;
         int expectedColumns = 3;
         int[][] board = new int[numberRows][expectedColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberColumns = TicTacToe.columnsIn(board);
         assertEquals(expectedColumns, actualNumberColumns,
@@ -167,6 +174,7 @@ class TicTacToeTest {
         int[][] board = new int[numberRows][expectedColumns];
         // changing random piece to see if piece placement disrupts function usability
         board[numberRows - 1][expectedColumns - 1] = TicTacToe.X;
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberColumns = TicTacToe.columnsIn(board);
         assertEquals(expectedColumns, actualNumberColumns,
@@ -180,6 +188,7 @@ class TicTacToeTest {
         // changing number of columns, ie, function should also have different return value (compared to previous cases)
         int expectedColumns = 4;
         int[][] board = new int[numberRows][expectedColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberColumns = TicTacToe.columnsIn(board);
         assertEquals(expectedColumns, actualNumberColumns,
@@ -193,6 +202,7 @@ class TicTacToeTest {
         int numberRows = 5;
         int expectedColumns = 5;
         int[][] board = new int[numberRows][expectedColumns];
+        // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
         int actualNumberColumns = TicTacToe.columnsIn(board);
         assertEquals(expectedColumns, actualNumberColumns,
@@ -203,14 +213,147 @@ class TicTacToeTest {
 
     // Tests for canPlay()
     @Test
-    void canPlay() {
-
+    void testCanPlayEmptyBoard() {
+        int rows = 3;
+        int columns = 3;
+        // creating an empty 3x3 game board
+        int[][] board = new int[rows][columns];
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        // boolean should be true no matter what position we provide to function
+        boolean expectedPlayState = true;
+        // checking bottom right corner of board to see if it is a playable location
+        boolean actualPlayState = TicTacToe.canPlay(board, rows - 1, columns - 1);
+        assertEquals(expectedPlayState, actualPlayState, "The current location is playable" +
+                "the function should return true ");
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by canPlay()");
     }
-
     @Test
-    void play() {
+    void testCanPlayFullBoard(){
+        int rows = 3;
+        int columns = 3;
+        // creating an empty board
+        int[][] board = new int[rows][columns];
+        // looping through board to fill each location with a game piece
+        for(int currentRow = 0; currentRow < rows; currentRow++){
+            for(int currentColumn = 0; currentColumn < columns; currentColumn++){
+                board[currentRow][currentColumn] = TicTacToe.O;
+            }
+        }
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        // confirming that canPlay function will return false for a full board
+        boolean expectedPlayState = false;
+        // checking top left corner of board (location doesn't matter; should return false as board full)
+        boolean actualPlayState = TicTacToe.canPlay(board, 0, 0);
+        assertEquals(expectedPlayState, actualPlayState, "The current location was unplayable, the function " +
+                "should return false");
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by canPlay()");
+    }
+    @Test
+    void testCanPlayFullLocation() {
+        // this test case is similar to last case, but just confirms that the last case didn't access a random index
+        int rows = 3;
+        int columns = 3;
+        // creating an empty 3x3 game board
+        int[][] board = new int[rows][columns];
+        // placing a piece at some location
+        int currentRow = 2;
+        int currentColumn = 2;
+        board[currentRow][currentColumn] = TicTacToe.O;
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        // boolean should be false as to be tested location is non-playable, ie, full
+        boolean expectedPlayState = false;
+        // checking if current location is playable
+        boolean actualPlayState = TicTacToe.canPlay(board, currentRow, currentColumn);
+        assertEquals(expectedPlayState, actualPlayState, "The current location was unplayable, the function " +
+                        "should return false");
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by canPlay()");
     }
 
+    // tests for play() function
+    @Test
+    void testPlay3x3() {
+        // testing for whether a piece can be played in a 3x3 board
+        int rows = 3;
+        int columns = 3;
+        int[][] board = new int[rows][columns];
+        // creating a copy of the board
+        int[][] copiedBoard = deepCopy(board);
+        // variables for where piece will be played & which piece to place
+        int pieceInRow = 2;
+        int pieceInColumn = 2;
+        int gamePiece = TicTacToe.O;
+        // placing a piece in deep copied array
+        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
+        // placing piece using the function (that is being tested)
+        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
+        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row " + pieceInRow +
+                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+    }
+    @Test
+    void testPlay4x5(){
+        // testing for whether changing the number of rows and/or columns affects function usability
+        int rows = 4;
+        int columns = 5;
+        int[][] board = new int[rows][columns];
+        // creating a copy of the board
+        int[][] copiedBoard = deepCopy(board);
+        // variables for where piece will be played & which piece to place
+        int pieceInRow = 3;
+        int pieceInColumn = 4;
+        int gamePiece = TicTacToe.O;
+        // placing a piece in deep copied array
+        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
+        // placing piece using the function (that is being tested)
+        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
+        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row " + pieceInRow +
+                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+    }
+    @Test
+    void testPlayTopLeft(){
+        // testing for whether changing the piece placement location affects function usability
+        int rows = 3;
+        int columns = 3;
+        int[][] board = new int[rows][columns];
+        // creating a copy of the board
+        int[][] copiedBoard = deepCopy(board);
+        // variables for where piece will be played & which piece to place
+        int pieceInRow = 0;
+        int pieceInColumn = 0;
+        int gamePiece = TicTacToe.O;
+        // placing a piece in deep copied array
+        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
+        // placing piece using the function (that is being tested)
+        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
+        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row " + pieceInRow +
+                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+    }
+    @Test
+    void testPlayChangingGamePiece(){
+        // testing for whether changing the game piece affects function usability
+        int rows = 3;
+        int columns = 3;
+        int[][] board = new int[rows][columns];
+        // creating a copy of the board
+        int[][] copiedBoard = deepCopy(board);
+        // variables for where piece will be played & which piece to place
+        int pieceInRow = 2;
+        int pieceInColumn = 2;
+        int gamePiece = TicTacToe.X;
+        // placing a piece in deep copied array
+        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
+        // placing piece using the function (that is being tested)
+        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
+        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed the game piece \"X\" at row " + pieceInRow +
+                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+    }
+
+    // tests for full() function
     @Test
     void full() {
     }
