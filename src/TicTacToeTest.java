@@ -355,9 +355,81 @@ class TicTacToeTest {
 
     // tests for full() function
     @Test
-    void full() {
+    void testEmptyBoard() {
+        // creating an empty 3x3 game board
+        int rows = 3;
+        int columns = 3;
+        int[][] board = new int[rows][columns];
+        // creating a copy of the game board
+        int[][] copiedBoard = deepCopy(board);
+        // checking whether board is full (using full() function)
+        boolean actualStatus = TicTacToe.full(board);
+        boolean expectedStatus = false;
+        assertEquals(expectedStatus, actualStatus, "The full() function should return false when given" +
+                "an empty array: " + Arrays.deepToString(copiedBoard));
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+    }
+    @Test
+    void testFullBoard() {
+        // creating an empty 3x3 game board
+        int rows = 3;
+        int columns = 3;
+        int[][] board = new int[rows][columns];
+        // looping through board to fill each location with a game piece, ie, a full board
+        for(int currentRow = 0; currentRow < rows; currentRow++){
+            for(int currentColumn = 0; currentColumn < columns; currentColumn++){
+                board[currentRow][currentColumn] = TicTacToe.X;
+            }
+        }
+        // creating a copy of the game board
+        int[][] copiedBoard = deepCopy(board);
+        // checking whether board is full (using full() function)
+        boolean actualStatus = TicTacToe.full(board);
+        boolean expectedStatus = true;
+        assertEquals(expectedStatus, actualStatus, "The full() function should return true when given" +
+                " the (full) array: " + Arrays.deepToString(copiedBoard));
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+    }
+    @Test
+    void testFull5x5(){
+        // test case confirms that varying board size doesn't affect function usability
+        // creating an empty 5x5 game board
+        int rows = 5;
+        int columns = 5;
+        int[][] board = new int[rows][columns];
+        // creating a copy of the game board
+        int[][] copiedBoard = deepCopy(board);
+        // checking whether board is full (using full() function)
+        boolean actualStatus = TicTacToe.full(board);
+        boolean expectedStatus = false;
+        assertEquals(expectedStatus, actualStatus, "The full() function should return false when given" +
+                " the array: " + Arrays.deepToString(copiedBoard));
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+    }
+    @Test
+    void testFullLocation() {
+        // test case confirms that all locations in the board are being checked and not only one
+        // creating an empty 3x3 game board
+        int rows = 3;
+        int columns = 3;
+        int[][] board = new int[rows][columns];
+        board[0][0] = TicTacToe.O;
+        // creating a copy of the game board
+        int[][] copiedBoard = deepCopy(board);
+        // checking whether board is full (using full() function)
+        boolean actualStatus = TicTacToe.full(board);
+        boolean expectedStatus = false;
+        assertEquals(expectedStatus, actualStatus, "The full() function should return false when given" +
+                " the array: " + Arrays.deepToString(copiedBoard));
+        // confirming that the board itself was not modified
+        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
     }
 
+
+    // test for winInRow() function
     @Test
     void winInRow() {
     }
