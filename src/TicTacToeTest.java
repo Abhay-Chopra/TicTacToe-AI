@@ -32,12 +32,28 @@ class TicTacToeTest {
         return new int[rows][columns];
     }
 
-    int[][] fullBoard;
+    int[][] full4x4Board;
     @BeforeEach
     void setFullBoard(){
-        fullBoard = new int[][]{{TicTacToe.O, TicTacToe.O, TicTacToe.O},
-                {TicTacToe.O, TicTacToe.O, TicTacToe.O},
-                {TicTacToe.O, TicTacToe.O, TicTacToe.O}};
+        full4x4Board = new int[][] {{TicTacToe.O, TicTacToe.O, TicTacToe.O},
+                                    {TicTacToe.O, TicTacToe.O, TicTacToe.O},
+                                    {TicTacToe.O, TicTacToe.O, TicTacToe.O}};
+    }
+    int[][] board3x3;
+    @BeforeEach
+    void setEmptyBoard(){
+        board3x3 = new int[][]{{TicTacToe.EMPTY, TicTacToe.EMPTY, TicTacToe.EMPTY},
+                               {TicTacToe.X, TicTacToe.X, TicTacToe.EMPTY},
+                               {TicTacToe.X, TicTacToe.X, TicTacToe.X}};
+    }
+    int[][] board5x4;
+    @BeforeEach
+    void setBoard5x4(){
+        board5x4 = new int[][]{{TicTacToe.X, TicTacToe.O, TicTacToe.X, TicTacToe.EMPTY},
+                               {TicTacToe.O, TicTacToe.O, TicTacToe.X, TicTacToe.O},
+                               {TicTacToe.X, TicTacToe.EMPTY, TicTacToe.O, TicTacToe.EMPTY},
+                               {TicTacToe.X, TicTacToe.EMPTY, TicTacToe.X, TicTacToe.EMPTY},
+                               {TicTacToe.EMPTY, TicTacToe.EMPTY, TicTacToe.EMPTY, TicTacToe.EMPTY},};
     }
 
     // Tests for createBoard() function
@@ -219,7 +235,7 @@ class TicTacToeTest {
     // test case: testing canPlay() given full board
     @Test
     void testCanPlayFullBoard(){
-        int[][] board = fullBoard;
+        int[][] board = full4x4Board;
         // getting a copy of our board
         int[][] copiedBoard = deepCopy(board);
 
@@ -245,171 +261,221 @@ class TicTacToeTest {
     // test case for a base 3x3 board, confirming piece placement works
     @Test
     void testPlay3x3() {
-        // testing for whether a piece can be played in a 3x3 board
-        int rows = 3;
-        int columns = 3;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(3, 3);
         // creating a copy of the board
         int[][] copiedBoard = deepCopy(board);
-        // variables for where piece will be played & which piece to place
-        int pieceInRow = 2;
-        int pieceInColumn = 2;
-        int gamePiece = TicTacToe.O;
-        // placing a piece in deep copied array
-        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
-        // placing piece using the function (that is being tested)
-        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
-        assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row " + pieceInRow +
-                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+
+        // expected vs actual, ie, putting piece on copiedBoard vs playing a piece on Actual board
+        copiedBoard[2][2] = TicTacToe.O;
+        TicTacToe.play(board, 2, 2, TicTacToe.O);
+        assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row 2, column 2");
     }
     // testing for whether changing the number of rows and/or columns affects function usability
     @Test
     void testPlay4x5(){
-        int rows = 4;
-        int columns = 5;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(4, 5);
         // creating a copy of the board
         int[][] copiedBoard = deepCopy(board);
-        // variables for where piece will be played & which piece to place
-        int pieceInRow = 3;
-        int pieceInColumn = 4;
-        int gamePiece = TicTacToe.O;
-        // placing a piece in deep copied array
-        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
-        // placing piece using the function (that is being tested)
-        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
-        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row " + pieceInRow +
-                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+
+        // expected vs actual, ie, putting piece on copiedBoard vs playing a piece on Actual board
+        copiedBoard[3][4] = TicTacToe.O;
+        TicTacToe.play(board, 3, 4, TicTacToe.O);
+        assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row 3, column 4");
     }
     // testing for whether changing the piece placement location affects function usability
     @Test
     void testPlayTopLeft(){
-        int rows = 3;
-        int columns = 3;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(3, 3);
         // creating a copy of the board
         int[][] copiedBoard = deepCopy(board);
-        // variables for where piece will be played & which piece to place
-        int pieceInRow = 0;
-        int pieceInColumn = 0;
-        int gamePiece = TicTacToe.O;
-        // placing a piece in deep copied array
-        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
-        // placing piece using the function (that is being tested)
-        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
-        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row " + pieceInRow +
-                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+
+        // expected vs actual, ie, putting piece on copiedBoard vs playing a piece on Actual board
+        copiedBoard[0][0] = TicTacToe.O;
+        TicTacToe.play(board, 0, 0, TicTacToe.O);
+        assertArrayEquals(copiedBoard, board, "play() should have placed a game piece at row 0, column 0");
     }
     // testing for whether changing the game piece affects function usability
     @Test
     void testPlayChangingGamePiece(){
-        int rows = 3;
-        int columns = 3;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(3, 3);
         // creating a copy of the board
         int[][] copiedBoard = deepCopy(board);
-        // variables for where piece will be played & which piece to place
-        int pieceInRow = 2;
-        int pieceInColumn = 2;
-        int gamePiece = TicTacToe.X;
+
         // placing a piece in deep copied array
-        copiedBoard[pieceInRow][pieceInColumn] = gamePiece;
+        copiedBoard[0][0] = TicTacToe.X;
         // placing piece using the function (that is being tested)
-        TicTacToe.play(board, pieceInRow, pieceInColumn, gamePiece);
-        Assertions.assertArrayEquals(copiedBoard, board, "play() should have placed the game piece \"X\" at row " + pieceInRow +
-                ", column " + pieceInColumn + ". Additionally, all other locations should have remained the same.");
+        TicTacToe.play(board, 0, 0, TicTacToe.X);
+        assertArrayEquals(copiedBoard, board, "play() should have placed the game piece \"X\" at row 0, column 0");
     }
 
     // tests for full() function
     // test case for full() function when given an empty array
     @Test
     void testEmptyBoard() {
-        // creating an empty 3x3 game board
-        int rows = 3;
-        int columns = 3;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(3, 3);
         // creating a copy of the game board
         int[][] copiedBoard = deepCopy(board);
-        // checking whether board is full (using full() function)
-        boolean actualStatus = TicTacToe.full(board);
-        boolean expectedStatus = false;
-        assertEquals(expectedStatus, actualStatus, "The full() function should return false when given" +
-                "an empty array: " + Arrays.deepToString(copiedBoard));
+
+        assertFalse(TicTacToe.full(board), "The full() function should return false when given an empty array");
         // confirming that the board itself was not modified
-        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+        assertArrayEquals(copiedBoard, board, "The array was modified by full()");
     }
     // test case for full() function when given a full array
     @Test
     void testFullBoard() {
-        // creating an empty 3x3 game board
-        int rows = 3;
-        int columns = 3;
-        int[][] board = new int[rows][columns];
-        // looping through board to fill each location with a game piece, ie, a full board
-        for(int currentRow = 0; currentRow < rows; currentRow++){
-            for(int currentColumn = 0; currentColumn < columns; currentColumn++){
-                board[currentRow][currentColumn] = TicTacToe.X;
-            }
-        }
+        int[][] board = full4x4Board;
         // creating a copy of the game board
         int[][] copiedBoard = deepCopy(board);
-        // checking whether board is full (using full() function)
-        boolean actualStatus = TicTacToe.full(board);
-        boolean expectedStatus = true;
-        assertEquals(expectedStatus, actualStatus, "The full() function should return true when given" +
-                " the (full) array: " + Arrays.deepToString(copiedBoard));
+
+        assertTrue(TicTacToe.full(board), "Full() return true when given a full array");
         // confirming that the board itself was not modified
-        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+        assertArrayEquals(copiedBoard, board, "The array was modified by full()");
     }
     // test case confirms that varying board size doesn't affect function usability
     @Test
     void testFull5x5(){
-        // creating an empty 5x5 game board
-        int rows = 5;
-        int columns = 5;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(5, 5);
         // creating a copy of the game board
         int[][] copiedBoard = deepCopy(board);
-        // checking whether board is full (using full() function)
-        boolean actualStatus = TicTacToe.full(board);
-        boolean expectedStatus = false;
-        assertEquals(expectedStatus, actualStatus, "The full() function should return false when given" +
-                " the array: " + Arrays.deepToString(copiedBoard));
+
+        assertFalse(TicTacToe.full(board));
         // confirming that the board itself was not modified
-        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+        assertArrayEquals(copiedBoard, board, "The array was modified by full()");
     }
     // test case confirms that all locations in the board are being checked and not only one
     @Test
     void testFullLocation() {
-        // creating an empty 3x3 game board
-        int rows = 3;
-        int columns = 3;
-        int[][] board = new int[rows][columns];
+        int[][] board = createTestBoard(3, 3);
+        // placing a game piece, ie, game board is not full
         board[0][0] = TicTacToe.O;
         // creating a copy of the game board
         int[][] copiedBoard = deepCopy(board);
-        // checking whether board is full (using full() function)
-        boolean actualStatus = TicTacToe.full(board);
-        boolean expectedStatus = false;
-        assertEquals(expectedStatus, actualStatus, "The full() function should return false when given" +
-                " the array: " + Arrays.deepToString(copiedBoard));
+
+        assertFalse(TicTacToe.full(board));
         // confirming that the board itself was not modified
-        Assertions.assertArrayEquals(copiedBoard, board, "The array was modified by full()");
+        assertArrayEquals(copiedBoard, board, "The array was modified by full()");
     }
 
     // test for winInRow() function
-    // test case for when there is a win in the first row
+    // test case for when there is a win in the last row
     @Test
-    void winInRow() {
+    void testWinInLastRow() {
+        int[][] board = board3x3;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInRow(board, 2, TicTacToe.X), "3 consecutive pieces in the same row constitutes a win");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInRow()");
+    }
+    // test case for when there isn't a win in a row, ie, "|X|X|Empty|"
+    @Test
+    void testNoWinInRow() {
+        int[][] board = board3x3;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertFalse(TicTacToe.winInRow(board, 1, TicTacToe.X));
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInRow()");
+    }
+    // test case for when there is a win in the second last row, ie, index 1
+    @Test
+    void testWinInSecondLastRow() {
+        int[][] board = board3x3;
+        // placing a piece at position 1,2 , ie, second last row is a winning row
+        board[1][2] = TicTacToe.X;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInRow(board, 1, TicTacToe.X), "3 consecutive pieces in the same row constitutes a win");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInRow()");
+    }
+    // test case to check whether changing number of rows and/or columns effects functionality
+    @Test
+    void testWinInRow5x4() {
+        int[][] board = board5x4;
+        board[3][1] = TicTacToe.X;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInRow(board, 3, TicTacToe.X), "3 consecutive pieces in the same row constitutes a win");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInRow()");
+    }
+    // test case for when there isn't a win in row but there #of pieces is >= 3, ie,  "|O|O|X|O|"
+    @Test
+    void testNoWinInRowFull(){
+        int[][] board = board5x4;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+        // checking whether player with piece "O" has won
+
+        assertFalse(TicTacToe.winInRow(board, 1, TicTacToe.O), "There is no winning position in \"|O|O|X|O|\"");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInRow()");
     }
 
+    // tests for winInColumn() function
+    // test case for when there is a win in the first column
     @Test
-    void winInColumn() {
+    void testWinInFirstColumn() {
+        int[][] board = board3x3;
+        board[0][0] = TicTacToe.X;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInColumn(board, 0, TicTacToe.X), "3 consecutive pieces in one column constitute a win");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInColumn()");
+
+    }
+    // test case for when there is a win in the second last column, ie, the winning column changed
+    @Test
+    void testWinInSecondLastColumn() {
+        int[][] board = board3x3;
+        board[0][1] = TicTacToe.X;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInColumn(board, 1, TicTacToe.X), "3 consecutive pieces in one column constitute a win");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInColumn()");
+    }
+    // test case to confirm that changing board size (changing #of rows and columns) doesn't affect functionality
+    @Test
+    void winInColumn5x4() {
+        int[][] board = board5x4;
+        board[4][0] = TicTacToe.X;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInColumn(board, 0, TicTacToe.X));
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInColumn()");
+    }
+    // test case for when there isn't a win in column, ie, C0:"Empty"|C1:"X"|C3:"X"
+    @Test
+    void testNoWinInColumn() {
+        int[][] board = board3x3;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertFalse(TicTacToe.winInColumn(board, 1, TicTacToe.X), "Only 2 consecutive pieces in the same column");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInColumn()");
     }
     // test case for there isn't a win in column but #of pieces >= 3, ie, C0:"X"|C1:"X"|C2:"O"|C3:"X"
     @Test
     void testNoWinInFullColumn() {
+        int[][] board = board5x4;
+        // creating a deep copy of the board
+        int[][] copiedBoard = deepCopy(board);
 
+        assertFalse(TicTacToe.winInColumn(board,0,TicTacToe.X));
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInColumn()");
     }
 
     // test for winInDiagonalBS() function
