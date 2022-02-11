@@ -479,13 +479,131 @@ class TicTacToeTest {
     }
 
     // test for winInDiagonalBS() function
+    // testcase: testing for a win in the backslash row for a 3x3 board
     @Test
     void winInDiagonalBS() {
+        int[][] board = board3x3;
+        // playing a game piece onto default board, ie, a win in a diagonal BS is now present
+        board[0][0] = TicTacToe.X;
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInDiagonalBS(board, TicTacToe.X), "Three pieces consecutively in BS is a win ");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalBS()");
+
+    }
+    // test case: changing board size and potential win location to see how it effects functionality
+    @Test
+    void winInDiagonalBS5x4() {
+        int[][] board = board5x4;
+        board[3][3] = TicTacToe.O;
+        // getting copy of board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInDiagonalBS(board, TicTacToe.O), "Three pieces consecutively in BS is a win ");
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalBS()");
+    }
+    // testing for different piece and the winning diagonal has a different location
+    @Test
+    void winInDiagonalBSLocation() {
+        int[][] board = board5x4;
+        // adding pieces to the board
+        board[3][1] = TicTacToe.X;
+        board[4][2] = TicTacToe.X;
+        // getting a copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInDiagonalBS(board, TicTacToe.X), "Three pieces consecutively in BS is a win ");
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalBS()");
+    }
+    // test case when there is no win in the diagonal BS (note: this is a 3x3 board)
+    @Test
+    void noWinInDiagonalBS() {
+        int[][] board = board3x3;
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertFalse(TicTacToe.winInDiagonalBS(board, TicTacToe.X));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalBS()");
+    }
+    // test case when there is no win in the diagonal BS, and number of pieces in some diagonal is >=3, ie, a piece has
+    // blocked the player's win
+    @Test
+    void noWinInDiagonalBSFull() {
+        int[][] board = board5x4;
+        board[3][3] = TicTacToe.X;
+        int[][] copiedBoard = deepCopy(board);
+
+        assertFalse(TicTacToe.winInDiagonalBS(board, TicTacToe.O));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalBS()");
     }
 
     // test for winInDiagonalFS() function
+    // testcase: testing for a win in the forward slash row for a 3x3 board
     @Test
     void winInDiagonalFS() {
+        int[][] board = board3x3;
+        // playing a piece onto the board, ie, there is a winning FS diagonal now
+        board[0][2] = TicTacToe.X;
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInDiagonalFS(board, TicTacToe.X), "Three pieces consecutively in FS is a win ");
+        // confirming our board wasn't changed
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalFS()");
+    }
+    // test case: changing board size and potential win location to see how it effects functionality
+    @Test
+    void winInDiagonalFS5x4() {
+        int[][] board = board5x4;
+        board[3][1] = TicTacToe.O;
+        // getting copy of board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInDiagonalFS(board, TicTacToe.O), "Three pieces consecutively in FS is a win ");
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalFS()");
+    }
+    //  testing for different piece and the winning diagonal has a different location
+    @Test
+    void winInDiagonalFSChanged() {
+        int[][] board = board5x4;
+        // adding pieces to the board
+        board[2][3] = TicTacToe.X;
+        board[4][1] = TicTacToe.X;
+        // getting a copy of the board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertTrue(TicTacToe.winInDiagonalFS(board, TicTacToe.X), "Three pieces consecutively in FS is a win ");
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalFS()");
+    }
+    // test case when there is no win in the diagonal FS (note: this is a 3x3 board)
+    @Test
+    void noWinInDiagonalFS() {
+        int[][] board = board3x3;
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertFalse(TicTacToe.winInDiagonalFS(board, TicTacToe.X));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalFS()");
+    }
+    // test case: when number of pieces in some diagonal >= 3, ie, players piece was blocked
+    @Test
+    void noWinInDiagonalFSFull() {
+        int[][] board = board5x4;
+        // blocking some diagonal FS
+        board[2][1] = TicTacToe.O;
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+
+        assertFalse(TicTacToe.winInDiagonalFS(board, TicTacToe.X));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board, "The board was modified by winInDiagonalBS()");
     }
 
     // test for hint() function
