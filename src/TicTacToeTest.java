@@ -607,8 +607,76 @@ class TicTacToeTest {
     }
 
     // test for hint() function
+    // hint for a winning position of a diagonal BS for one player
     @Test
-    void hint() {
+    void hintInDiagonalBS() {
+        int[][] board = createTestBoard(3, 3);
+        // creating a near winning condition for player with piece "X", in diagonal BS
+        board[0][0] = TicTacToe.X;
+        board[1][1] = TicTacToe.X;
+
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        int[] expectedReturn = new int[]{2,2};
+        assertArrayEquals(expectedReturn, TicTacToe.hint(board, TicTacToe.X));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board);
+    }
+    // hint for a winning position of a diagonal FS for one player
+    @Test
+    void hintInDiagonalFS() {
+        int[][] board = createTestBoard(4, 4);
+        // creating a near winning condition for player with piece "X", in diagonal FS
+        board[1][1] = TicTacToe.X;
+        board[2][0] = TicTacToe.X;
+
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        int[] expectedReturn = new int[]{0,2};
+        assertArrayEquals(expectedReturn, TicTacToe.hint(board, TicTacToe.X));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board);
+    }
+    // hint for a winning position of a win in column for one player
+    @Test
+    void hintInColumn() {
+        int[][] board = createTestBoard(4,5);
+        board[0][0] = TicTacToe.O;
+        board[1][0] = TicTacToe.O;
+
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        int[] expectedReturn = new int[]{2,0};
+        assertArrayEquals(expectedReturn, TicTacToe.hint(board, TicTacToe.O));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board);
+    }
+    // hint for a winning position of a win in column for one player
+    @Test
+    void hintInRow() {
+        int[][] board = createTestBoard(4,3);
+        board[1][0] = TicTacToe.O;
+        board[1][1] = TicTacToe.O;
+
+        // getting a copy of our board
+        int[][] copiedBoard = deepCopy(board);
+        int[] expectedReturn = new int[]{1,2};
+        assertArrayEquals(expectedReturn, TicTacToe.hint(board, TicTacToe.O));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board);
+    }
+    // test case when start of game, ie, empty board | testing to get default return value
+    @Test
+    void noHint() {
+        // creating an empty 3x3 board
+        int[][] board = createTestBoard(3, 3);
+        int[][] copiedBoard = deepCopy(board);
+
+        // expected return of hint functions, ie, the defaults (as no hint present)
+        int[] expectedDefaultReturn = new int[]{-1, -1};
+        assertArrayEquals(expectedDefaultReturn, TicTacToe.hint(board, TicTacToe.X));
+        // confirming our board wasn't modified
+        assertArrayEquals(copiedBoard, board);
     }
 
     // test for factorial() function
