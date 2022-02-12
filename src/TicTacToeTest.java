@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.*;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Abhay Chopra
  * @version Testing 1.0
  * Tutorial 06 (W/ Amir)
- *
+ * February 11th, 2021
  */
 class TicTacToeTest {
 
@@ -679,8 +680,20 @@ class TicTacToeTest {
         assertArrayEquals(copiedBoard, board);
     }
 
-    // test for factorial() function
+    // tests for factorial() function
+    // test case where given integer to the factorial function is 0
     @Test
-    void factorial() {
+    void factorial0() {
+        assertEquals(BigInteger.valueOf(1), TicTacToe.factorial(0), "The factorial of 0 is 1");
+    }
+    // case where given integer is greater than 0
+    @Test
+    void factorialGreater0(){
+        assertEquals(BigInteger.valueOf(6), TicTacToe.factorial(3), "The factorial of 3 is 6");
+    }
+    // test case where integer is significantly greater than 0
+    @Test
+    void factorialTest(){
+        assertEquals(BigInteger.valueOf(3628800), TicTacToe.factorial(10), "The factorial of 10 is 3,628,800");
     }
 }
