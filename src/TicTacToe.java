@@ -17,7 +17,9 @@ import java.util.*;
  *
  * @author Jonathan Hudson, Abhay Chopra
  * @version 1.1
- * Tutorial 06 (W/ Amir)
+ * Tutorial: Tutorial 06 (W/ Amir)
+ * Date: February 11th, 2022
+ * Name: Abhay Chopra
  */
 public class TicTacToe extends Canvas {
 
@@ -101,76 +103,72 @@ public class TicTacToe extends Canvas {
     private static int[][] board;
 
     /**
-     * Function: createBoard
+     * Creates a board (2D array) of size rows (dimension 1) and columns (dimension 2)
      *
-     * @param rows    integer
-     * @param columns integer
-     * @return 2D integer array
+     * @param rows    integer for size of first dimension of the 2D array (board)
+     * @param columns integer for size of second dimension of the 2D array (board)
+     * @return 2D integer array of size rows (dimension 1) and columns (dimension 2)
      */
     public static int[][] createBoard(int rows, int columns) {
-        /*
-        Assume rows/columns are valid positive integers in inclusive range [3,5]
-        Create and return a 2D integer array for the board of the game (Filled with EMPTY = 0 pieces)
-        Rows should be size of first dimension of array, columns the second dimension
-         */
         return new int[rows][columns];
     }
 
     /**
-     * Function: rowsIn
+     * How many rows (dimension 1) there are in a 2D array (game board)
      *
-     * @param board 2D integer array
-     * @return integer for number of rows in board
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @return integer for number of rows (1st dimension of array) in board
      */
     public static int rowsIn(int[][] board) {
         return board.length;
     }
 
     /**
-     * Function: columnsIn
+     * How many columns (dimension 2) there are in a 2D array (game board)
      *
-     * @param board 2D integer array
-     * @return integer for number of columns in board
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @return integer for number of columns (2nd dimension of array) in board
      */
     public static int columnsIn(int[][] board) {
         return board[0].length;
     }
 
     /**
-     * Function: canPlay
+     * Can a piece be played at some given location, ie, row/column
      *
-     * @param board  2D integer array
-     * @param row    integer
-     * @param column integer
-     * @return boolean
+     * @param board  The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @param row    integer for size of first dimension of the 2D array (board)
+     * @param column integer for size of second dimension of the 2D array (board)
+     * @return boolean true: if piece can be played, ie, location is empty|boolean false: if piece can't be played
      */
     public static boolean canPlay(int[][] board, int row, int column) {
         return board[row][column] == EMPTY;
     }
 
     /**
-     * Function: play
+     * Plays a given game piece onto the board, given the location
      *
-     * @param board  2D integer array
-     * @param row    integer
-     * @param column integer
-     * @param piece  integer
+     * @param board  The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @param row    integer for size of first dimension of the 2D array (board)
+     * @param column integer for size of second dimension of the 2D array (board)
+     * @param piece  The piece to look for 3 in a row for any row
      */
     public static void play(int[][] board, int row, int column, int piece) {
         board[row][column] = piece;
     }
 
     /**
-     * Function: full
+     * Is the board (2D integer array) full, ie, are all locations occupied by game pieces
      *
-     * @param board 2D integer array
-     * @return boolean
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @return boolean true: if all locations on the board are occupied, otherwise returns boolean false
      */
     public static boolean full(int[][] board) {
         // loops through entire array and if any space is empty: returns false; otherwise true
         // these are nested for each loops
         for (int[] row : board) {
             for (int column : row) {
+                //checking if empty
                 if (column == EMPTY) {
                     return false;
                 }
@@ -180,32 +178,32 @@ public class TicTacToe extends Canvas {
     }
 
     /**
-     * Function: winInRow
+     * Is there a win (3 consecutive pieces of one player) in a given row
      *
-     * @param board 2D integer array
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
      * @param row   integer
-     * @param piece integer
-     * @return boolean
+     * @param piece The piece to look for 3 in a row for any row
+     * @return boolean true: if there is a win in the given row|otherwise returns boolean false
      */
     public static boolean winInRow(int[][] board, int row, int piece) {
         /*
         Look at indicated row at given index in board If that row has at least 3 entries with given type of piece (X/O)
         then return true, otherwise false
          */
-        for (int i = 0; i < columnsIn(board); i++) {
+        for (int column = 0; column < columnsIn(board); column++) {
             // checking for three consecutive pieces in a row
-            if (i == 0) {
-                if (board[row][i] == piece && board[row][i + 1] == piece && board[row][i + 2] == piece) {
+            if (column == 0) {
+                if (board[row][column] == piece && board[row][column + 1] == piece && board[row][column + 2] == piece) {
                     return true;
                 }
             }// when game board has 4 columns, we can check if columns 1,2,3 have the same pieces
-            else if (columnsIn(board) == 4 && i == 2) {
-                if (board[row][i - 1] == piece && board[row][i] == piece && board[row][i + 1] == piece) {
+            else if (columnsIn(board) == 4 && column == 2) {
+                if (board[row][column - 1] == piece && board[row][column] == piece && board[row][column + 1] == piece) {
                     return true;
                 }
             }// when game board has 5 columns, we can check if columns 1,2,3 or 2,3,4 have the same pieces
-            else if (columnsIn(board) == 5 && (i == 2 || i == 3)) {
-                if (board[row][i - 1] == piece && board[row][i] == piece && board[row][i + 1] == piece) {
+            else if (columnsIn(board) == 5 && (column == 2 || column == 3)) {
+                if (board[row][column - 1] == piece && board[row][column] == piece && board[row][column + 1] == piece) {
                     return true;
                 }
             }
@@ -214,27 +212,31 @@ public class TicTacToe extends Canvas {
     }
 
     /**
-     * Function: winInColumn
+     * Is there a win (3 consecutive pieces of one player) in a given column
      *
-     * @param board  2D Integer array
+     * @param board  The 2D array board of size rows (dimension 1) and columns (dimension 2)
      * @param column integer
-     * @param piece  integer
-     * @return boolean
+     * @param piece  The piece to look for 3 in a row for any row
+     * @return boolean true:if there is a win in the column|otherwise returns boolean false
      */
     public static boolean winInColumn(int[][] board, int column, int piece) {
-        for (int i = 0; i < rowsIn(board); i++) {
-            if (i == 0) {
-                if (board[i][column] == piece && board[i + 1][column] == piece && board[i + 2][column] == piece) {
+        // looping through entire board; finding the columns that have the indicated piece
+        for (int row = 0; row < rowsIn(board); row++) {
+            if (row == 0) {
+                // checking if the current column has all the pieces
+                if (board[row][column] == piece && board[row + 1][column] == piece && board[row + 2][column] == piece) {
                     return true;
                 }
             }// when game board has 4 rows,  we can check if rows 1,2,3 have the particular pieces
-            else if (rowsIn(board) == 4 && i == 2) {
-                if (board[i - 1][column] == piece && board[i][column] == piece && board[i + 1][column] == piece) {
+            else if (rowsIn(board) == 4 && row == 2) {
+                // checking if the current column has all the pieces
+                if (board[row - 1][column] == piece && board[row][column] == piece && board[row + 1][column] == piece) {
                     return true;
                 }
             }// when game board has 5 rows, we can check if rows 1,2,3 or 2,3,4 have the particular pieces
-            else if (rowsIn(board) == 5 && (i == 2 || i == 3)) {
-                if (board[i - 1][column] == piece && board[i][column] == piece && board[i + 1][column] == piece) {
+            else if (rowsIn(board) == 5 && (row == 2 || row == 3)) {
+                // checking if the current column has all the pieces
+                if (board[row - 1][column] == piece && board[row][column] == piece && board[row + 1][column] == piece) {
                     return true;
                 }
             }
@@ -243,11 +245,11 @@ public class TicTacToe extends Canvas {
     }
 
     /**
-     * Function: winInDiagonalBS
+     * Is there a win for player with a given piece in some diagonal BS
      *
-     * @param board 2D integer array
-     * @param piece integer
-     * @return boolean
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @param piece The piece to look for 3 in a row for any row
+     * @return boolean false: if no winning diagonal in BS, boolean true: if winning diagonal in BS
      */
     public static boolean winInDiagonalBS(int[][] board, int piece) {
         // number of times the piece is present in diagonal backslash row
@@ -281,11 +283,11 @@ public class TicTacToe extends Canvas {
 
 
     /**
-     * Function: winInDiagonalFS
+     * Is there a win for player with a given piece in some diagonal FS
      *
-     * @param board 2D integer array
-     * @param piece integer
-     * @return boolean
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @param piece The piece to look for 3 in a row for any row
+     * @return boolean false: if no winning diagonal in FS, boolean true: if winning diagonal in FS
      */
     public static boolean winInDiagonalFS(int[][] board, int piece) {
         // number of times the piece is present in diagonal forward-slash row
@@ -318,14 +320,15 @@ public class TicTacToe extends Canvas {
     }
 
     /**
-     * Function: hint
+     * Is there a way for player with game piece to win in the current board
+     * Default returns: {-1,-1} when no winning location
      *
-     * @param board 2D integer array
-     * @param piece integer
-     * @return 1D integer array
+     * @param board The 2D array board of size rows (dimension 1) and columns (dimension 2)
+     * @param piece The piece to look for 3 in a row for any row
+     * @return 1D integer array containing which location to play to win, (-1,-1) default
      */
     public static int[] hint(int[][] board, int piece) {
-        /*System.out.println(Arrays.deepToString(board));*/
+        // looping through rows and columns
         for(int row = 0; row < rowsIn(board); row++){
             for(int column = 0; column < columnsIn(board); column++){
                 // checking if current position is empty
@@ -334,6 +337,7 @@ public class TicTacToe extends Canvas {
                     // conditional checks if player has won the game
                     if(won(board, piece)){
                        board[row][column] = EMPTY;
+                       // return winning location
                        return new int[]{row, column};
                     }else{
                         board[row][column] = EMPTY;
